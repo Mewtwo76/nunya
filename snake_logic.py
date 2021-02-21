@@ -1,6 +1,7 @@
 from MoveEnums import Moves
 from board import Board, Snake, Pos
 import random
+import math
 
 class Game:
   def __init__(self, board, you):
@@ -31,7 +32,7 @@ class Game:
       new_direction = random.choice(choices)
       print(f"new direction is {new_direction.name}")
       new_pos = self.getNewPos(new_direction)
-      is_safe = self.isNewPosSafeThinkTank(new_pos)
+      is_safe = self.isNewPosSafe(new_pos)
       if is_safe or len(choices) == 1:
         break
       else:
@@ -144,3 +145,30 @@ class Game:
           break
     return is_pos_safe
     
+    def EAT(self):
+      distX = 100000000000000
+      distY = 100000000000000
+      for food in self.board.food:
+          print(food)
+          tmpdistX = abs(food.pos.x - self.me.head.x)
+          tmpdistY = abs(food.pos.y - self.me.head.y)
+          if abs(math.sqrt(tmpdistX + tmpdistY)) < abs(math.sqrt(distX + distY)):
+            distX = tmpdistX
+            distY = tmpdistY
+            print("closer food found")
+            self.closestFood = food
+
+      distX = 100000000000000
+      distY = 100000000000000
+      for mmove in self.listOfLegalMove:
+          print(mmove)
+          newPos = self.findPoint(mmove)
+
+          tmpdistX = abs(self.closestFood['x'] - newPos[0])
+          tmpdistY = abs(self.closestFood['y'] - newPos[1])
+
+          if abs(math.sqrt(tmpdistX + tmpdistY)) < abs(math.sqrt(distX + distY)):
+            distX = tmpdistX
+            distY = tmpdistY
+            print("better move found")
+            self.bestMove = mmove
