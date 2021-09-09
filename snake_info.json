@@ -2,6 +2,6 @@
   "apiversion": "1",
   "author" : "nunya",
   "color" : "#40ee35",
-  "head" : "pixel-round",
-  "tail" : "pixel-round"
+  "head" : "replit-mark",
+  "tail" : "replit-notmark"
 }
